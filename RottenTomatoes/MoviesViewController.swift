@@ -13,23 +13,18 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
 
     @IBOutlet weak var tableView: UITableView!
     var movies : [NSDictionary]?
+    var refreshControl: UIRefreshControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         let url = NSURL(string: "https://gist.githubusercontent.com/timothy1ee/d1778ca5b944ed974db0/raw/489d812c7ceeec0ac15ab77bf7c47849f2d1eb2b/gistfile1.json")!
         
-        let request = NSURLRequest(URL: url)
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {
-            (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-            let json = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? NSDictionary
-            if let json = json {
-                self.movies = json["movies"] as? [NSDictionary]
-                self.tableView.reloadData()
-            }
-            self.tableView.dataSource = self
-            self.tableView.delegate = self
-        }
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.addSubview(refreshControl)
+        
+        loadMoviesData(nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,5 +70,51 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let movieDetailViewController = segue.destinationViewController as! MovieDetailViewController
         movieDetailViewController.movie = selectedMovie
         
+    }
+    
+    func loadMoviesData(completion: (() -> Void)!) {
+        let url = NSURL(string: "https://gist.githubusercontent.com/timothy1ee/d1778ca5b944ed974db0/raw/489d812c7ceeec0ac15ab77bf7c47849f2d1eb2b/gistfile1.json")!
+        let request = NSURLRequest(URL: url)
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {
+            (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            let json = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? NSDictionary
+            if let json = json {
+                self.movies = json["movies"] as? [NSDictionary]
+                self.tableView.reloadData()
+            }
+            self.tableView.dataSource = self
+            self.tableView.delegate = self
+            if completion != nil {
+                completion()
+            }
+        }
+
+    }
+    
+    func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
+    }
+    
+    func onRefresh() {
+        loadMoviesData() {
+            self.fakeGetNewMovies()
+            self.refreshControl.endRefreshing()
+        }
+    }
+    
+    //move random movie to top for feeling as loaded new - because data static at the moment
+    func fakeGetNewMovies() {
+        if self.movies?.count > 1 {
+            //                let lastIndex = self.movies!.count
+            let lastIndex = Int(arc4random_uniform(10)) + 9
+            let lastMovie = self.movies![lastIndex - 1]
+            self.movies!.insert(lastMovie, atIndex: 0)
+            self.movies!.removeAtIndex(lastIndex)
+        }
     }
 }
