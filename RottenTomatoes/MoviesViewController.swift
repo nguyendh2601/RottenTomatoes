@@ -32,9 +32,11 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         config.spinnerLineWidth = 5
         SwiftLoader.setConfig(config)
         SwiftLoader.show(title: "Loading...", animated: true)
+        tableView.hidden = true
         
         loadMoviesData() {
             SwiftLoader.hide()
+            self.tableView.hidden = false
         }
     }
 
