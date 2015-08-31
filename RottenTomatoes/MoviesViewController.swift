@@ -19,7 +19,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.addSubview(refreshControl)
@@ -61,7 +60,24 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("MovieCell", forIndexPath: indexPath) as! MovieCell
         let movie = movies![indexPath.row]
-        cell.posterImage.setImageWithURL(NSURL(string: movie.valueForKeyPath("posters.thumbnail") as! String)!)
+        
+        let imageRequest = NSURLRequest(URL: NSURL(string: movie.valueForKeyPath("posters.thumbnail") as! String)!)
+        let cachedImage = UIImageView.sharedImageCache().cachedImageForRequest(imageRequest)
+        if (cachedImage != nil) {
+            cell.posterImage.image = cachedImage
+        } else {
+            //request then fade in the image
+            cell.posterImage.setImageWithURLRequest(imageRequest, placeholderImage: nil, success: {
+                (request, response, image) in
+                cell.posterImage.alpha = 0.0
+                cell.posterImage.image = image
+                UIView.animateWithDuration(1.0, animations: {
+                    cell.posterImage.alpha = 1.0
+                })
+                
+                }, failure: nil)
+        }
+
         cell.titleLabel.text = movie["title"] as? String
         cell.synopsisLabel.text = movie["synopsis"] as? String
         return cell
@@ -89,15 +105,22 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let request = NSURLRequest(URL: url)
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {
             (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-            let json = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? NSDictionary
-            if let json = json {
-                self.movies = json["movies"] as? [NSDictionary]
-                self.tableView.reloadData()
-            }
-            self.tableView.dataSource = self
-            self.tableView.delegate = self
-            if completion != nil {
-                completion()
+            if error != nil {
+                self.showMessage("Network Error!", type: .Error, options: [.AutoHide(true),
+                    .AutoHideDelay(3.0),
+                    .TextColor(.blackColor())])
+                SwiftLoader.hide()
+                self.tableView.hidden = false
+            } else {
+                if let json = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? NSDictionary {
+                    self.movies = json["movies"] as? [NSDictionary]
+                    self.tableView.reloadData()
+                    self.tableView.dataSource = self
+                    self.tableView.delegate = self
+                    if completion != nil {
+                        completion()
+                    }
+                }
             }
         }
 

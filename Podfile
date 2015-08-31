@@ -3,3 +3,4 @@ use_frameworks!
 
 pod 'AFNetworking'
 pod 'SwiftLoader'
+pod 'GSMessages'

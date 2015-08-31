@@ -15,6 +15,7 @@
 		54E297ED1B92234C000C6484 /* RottenTomatoesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E297EC1B92234C000C6484 /* RottenTomatoesTests.swift */; };
 		54E297F81B92239E000C6484 /* MoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E297F71B92239E000C6484 /* MoviesViewController.swift */; };
 		54E297FD1B9227BE000C6484 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E297FC1B9227BE000C6484 /* MovieCell.swift */; };
+		54E8075D1B94B72D0098D864 /* GSMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E8075C1B94B72D0098D864 /* GSMessage.swift */; };
 		9624A8ADC737F932D3316E71 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7E6414AF52B046A823E2757 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,7 @@
 		54E297EC1B92234C000C6484 /* RottenTomatoesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RottenTomatoesTests.swift; sourceTree = "<group>"; };
 		54E297F71B92239E000C6484 /* MoviesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesViewController.swift; sourceTree = "<group>"; };
 		54E297FC1B9227BE000C6484 /* MovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		54E8075C1B94B72D0098D864 /* GSMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GSMessage.swift; path = ../Pods/GSMessages/GSMessages/GSMessage.swift; sourceTree = "<group>"; };
 		72141EB2ED0269DC65D43C5B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D7E6414AF52B046A823E2757 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -97,6 +99,7 @@
 		54E297D31B92234C000C6484 /* RottenTomatoes */ = {
 			isa = PBXGroup;
 			children = (
+				54E8075E1B94B7490098D864 /* Utils */,
 				54E297F91B922777000C6484 /* Views */,
 				54E297F61B92237E000C6484 /* ViewControllers */,
 				54E297D61B92234C000C6484 /* AppDelegate.swift */,
@@ -148,6 +151,14 @@
 				54E297FC1B9227BE000C6484 /* MovieCell.swift */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		54E8075E1B94B7490098D864 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				54E8075C1B94B72D0098D864 /* GSMessage.swift */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 		6B0FB754D608224DC29DB515 /* Frameworks */ = {
@@ -310,6 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				548BFD1B1B9237B800A09F5A /* MovieDetailViewController.swift in Sources */,
+				54E8075D1B94B72D0098D864 /* GSMessage.swift in Sources */,
 				54E297D71B92234C000C6484 /* AppDelegate.swift in Sources */,
 				54E297F81B92239E000C6484 /* MoviesViewController.swift in Sources */,
 				54E297FD1B9227BE000C6484 /* MovieCell.swift in Sources */,

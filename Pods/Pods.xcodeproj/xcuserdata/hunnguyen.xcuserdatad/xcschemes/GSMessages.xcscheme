@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8B308B6896EC9BB4BEDC6487"
-               BuildableName = "SwiftLoader.framework"
-               BlueprintName = "SwiftLoader"
+               BlueprintIdentifier = "39DBD9AD6C49506D05CE17AE"
+               BuildableName = "GSMessages.framework"
+               BlueprintName = "GSMessages"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

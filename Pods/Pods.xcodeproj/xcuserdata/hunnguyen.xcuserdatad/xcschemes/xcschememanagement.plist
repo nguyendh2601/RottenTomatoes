@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>GSMessages.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,7 +27,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>24A25A8E89C22EABF7394A195C7EC86F</key>
+		<key>06E5FB5CD2A20CF721B3245B62381511</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -32,7 +37,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BEC6B6BED76F525B2E5559BBB67ADE98</key>
+		<key>2A6161F332BA98B9604273A12AF15DCB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3D7F616AA682972AF43360BF58DF6556</key>
 		<dict>
 			<key>primary</key>
 			<true/>
